@@ -1,0 +1,20 @@
+11/18/25, 2:30 PM - Alice: Hey team! Quick update on the project
+11/18/25, 2:31 PM - Alice: We've completed the OCR feature and it's working great with both Claude and DeepSeek
+11/18/25, 2:32 PM - Bob: That's awesome! How's the performance?
+11/18/25, 2:33 PM - Alice: DeepSeek is faster and cheaper, Claude gives slightly better summaries
+11/18/25, 2:35 PM - Charlie: Can we process WhatsApp chats too?
+11/18/25, 2:36 PM - Alice: Yes! Just added that feature. You can upload .txt exports
+11/18/25, 2:37 PM - Bob: What about processing files from server paths instead of uploading?
+11/18/25, 2:38 PM - Alice: Good question. Let me check with the dev team
+11/18/25, 2:40 PM - Dave: I can add that feature today
+11/18/25, 2:41 PM - Alice: Perfect! Dave, please add an API endpoint for file path processing
+11/18/25, 2:42 PM - Dave: Will do. Should be done by EOD
+11/18/25, 2:45 PM - Charlie: Also, can we batch process multiple files?
+11/18/25, 2:46 PM - Dave: That's a good idea for v2. Let's focus on single file processing first
+11/18/25, 2:50 PM - Bob: Agreed. What's the timeline for launch?
+11/18/25, 3:00 PM - Alice: Targeting end of this week. Need to finish testing and documentation
+11/18/25, 3:05 PM - Charlie: I can help with the docs
+11/18/25, 3:06 PM - Alice: Great! I'll send you the API specs
+11/18/25, 3:10 PM - Bob: Let's schedule a demo for Friday 2pm
+11/18/25, 3:11 PM - Alice: 👍 Sounds good
+11/18/25, 3:12 PM - Dave: I'll have everything ready by then

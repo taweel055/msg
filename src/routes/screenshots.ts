@@ -146,4 +146,73 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// New endpoint: Process file from path
+router.post('/process-path', async (req, res) => {
+  try {
+    const { file_path, provider = 'deepseek', group_id } = req.body;
+
+    if (!file_path) {
+      return res.status(400).json({ error: 'file_path is required' });
+    }
+
+    // Validate file exists
+    if (!fs.existsSync(file_path)) {
+      return res.status(404).json({ error: 'File not found at specified path' });
+    }
+
+    // Check if file is readable
+    try {
+      fs.accessSync(file_path, fs.constants.R_OK);
+    } catch (err) {
+      return res.status(403).json({ error: 'File is not readable' });
+    }
+
+    const ext = path.extname(file_path).toLowerCase();
+    const filename = path.basename(file_path);
+
+    // Validate file type
+    const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const textTypes = ['.txt'];
+
+    const isImage = imageTypes.includes(ext);
+    const isText = textTypes.includes(ext);
+
+    if (!isImage && !isText) {
+      return res.status(400).json({
+        error: 'Unsupported file type. Supported: jpg, jpeg, png, gif, webp, txt'
+      });
+    }
+
+    // Determine content type
+    const contentType = isText ? 'chat' : 'screenshot';
+
+    // Process the file
+    let ocrResult;
+    if (isText) {
+      ocrResult = await processChat(file_path, provider as OCRProvider);
+    } else {
+      ocrResult = await processScreenshot(file_path, provider as OCRProvider);
+    }
+
+    // Save to database
+    const screenshot = await ScreenshotModel.create({
+      filename,
+      filepath: file_path,
+      group_id: group_id,
+      content_type: contentType,
+      ocr_provider: provider,
+      extracted_text: ocrResult.extractedText,
+      summary: ocrResult.summary,
+    });
+
+    res.status(201).json(screenshot);
+  } catch (error) {
+    console.error('Process path error:', error);
+    res.status(500).json({
+      error: 'Failed to process file from path',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 export default router;

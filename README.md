@@ -1,15 +1,15 @@
 # Screenshot OCR & Chat Analysis App
 
-A powerful application powered by Claude Haiku 3.5 for processing screenshots and WhatsApp chats with automatic summarization, grouping, and task management.
+A powerful application powered by Claude Haiku 4.5 for processing screenshots and WhatsApp chats with automatic summarization, grouping, and task management.
 
 ## Features
 
-- **Screenshot OCR**: Extract text from images using Claude Haiku 3.5 vision model
+- **Screenshot OCR**: Extract text from images using Claude Haiku 4.5 vision model
 - **WhatsApp Chat Analysis**: Analyze exported WhatsApp chats (.txt files)
 - **AI Summarization**: Automatically summarize content with key insights powered by Claude
 - **Smart Grouping**: Organize content into custom groups/niches
 - **Task Management**: Create and manage tasks from screenshots or chats
-- **Dual AI Support**: Claude Haiku 3.5 (recommended) and DeepSeek (chat analysis only)
+- **Dual AI Support**: Claude Haiku 4.5 (recommended) and DeepSeek (chat analysis only)
 - **File Path Processing**: Process files directly from filesystem paths
 
 ## Setup
@@ -24,7 +24,7 @@ cd client && npm install
 ```bash
 cp .env.example .env
 # Edit .env with your Anthropic API key
-# ANTHROPIC_API_KEY is required for Claude Haiku 3.5
+# ANTHROPIC_API_KEY is required for Claude Haiku 4.5
 # Get your key from: https://console.anthropic.com/
 ```
 
@@ -104,7 +104,7 @@ python examples/process-file-path.py /path/to/chat.txt claude
 ```
 
 **Note:** Provider options are:
-- `claude` - Claude Haiku 3.5 (recommended for both screenshots and chats)
+- `claude` - Claude Haiku 4.5 (recommended for both screenshots and chats)
 - `deepseek` - DeepSeek (chat analysis only, does not support screenshot OCR)
 
 ### Response:
@@ -123,7 +123,10 @@ python examples/process-file-path.py /path/to/chat.txt claude
 
 ## AI Models Used
 
-- **Claude Haiku 3.5** (`claude-3-5-haiku-20241022`): Fast, cost-effective model for screenshot OCR and chat analysis
+- **Claude Haiku 4.5** (`claude-haiku-4-5`): Fast, cost-effective model for screenshot OCR and chat analysis
+  - 73.3% on SWE-bench Verified (one of the world's best coding models)
+  - 2x faster than previous versions, 1/3 the cost
+  - 200K token context window, 64K max output
 - **DeepSeek**: Alternative for text-based chat analysis (screenshot OCR not supported by DeepSeek API)
 
 ## Tech Stack

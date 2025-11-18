@@ -63,7 +63,7 @@ export default function UploadSection({ groups, onUploadSuccess, selectedGroup }
       <div className="form-group">
         <label>AI Provider</label>
         <select value={provider} onChange={(e) => setProvider(e.target.value as 'claude' | 'deepseek')}>
-          <option value="claude">Claude Haiku 3.5 (Recommended)</option>
+          <option value="claude">Claude Haiku 4.5 (Recommended)</option>
           <option value="deepseek">DeepSeek (Chat Analysis Only)</option>
         </select>
       </div>

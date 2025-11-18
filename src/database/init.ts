@@ -49,6 +49,7 @@ export async function initializeDatabase() {
       filename TEXT NOT NULL,
       filepath TEXT NOT NULL,
       group_id TEXT,
+      content_type TEXT DEFAULT 'screenshot',
       ocr_provider TEXT NOT NULL,
       extracted_text TEXT,
       summary TEXT,
@@ -56,6 +57,13 @@ export async function initializeDatabase() {
       FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE SET NULL
     )
   `);
+
+  // Add content_type column if it doesn't exist (for existing databases)
+  await dbAsync.run(`
+    ALTER TABLE screenshots ADD COLUMN content_type TEXT DEFAULT 'screenshot'
+  `).catch(() => {
+    // Column already exists, ignore error
+  });
 
   await dbAsync.run(`
     CREATE TABLE IF NOT EXISTS tasks (

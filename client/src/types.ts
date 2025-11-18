@@ -3,6 +3,7 @@ export interface Screenshot {
   filename: string;
   filepath: string;
   group_id?: string;
+  content_type: 'screenshot' | 'chat';
   ocr_provider: 'claude' | 'deepseek';
   extracted_text?: string;
   summary?: string;

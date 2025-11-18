@@ -10,7 +10,7 @@ interface Props {
 
 export default function UploadSection({ groups, onUploadSuccess, selectedGroup }: Props) {
   const [uploading, setUploading] = useState(false);
-  const [provider, setProvider] = useState<'claude' | 'deepseek'>('claude');
+  const [provider, setProvider] = useState<'claude' | 'deepseek'>('deepseek');
   const [groupId, setGroupId] = useState<string>(selectedGroup || '');
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -51,20 +51,20 @@ export default function UploadSection({ groups, onUploadSuccess, selectedGroup }
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file && (file.type.startsWith('image/') || file.type === 'text/plain')) {
       handleFileSelect(file);
     }
   };
 
   return (
     <div className="card">
-      <h2>Upload Screenshot</h2>
+      <h2>Upload Screenshot or WhatsApp Chat</h2>
 
       <div className="form-group">
-        <label>OCR Provider</label>
+        <label>AI Provider</label>
         <select value={provider} onChange={(e) => setProvider(e.target.value as 'claude' | 'deepseek')}>
+          <option value="deepseek">DeepSeek (Recommended)</option>
           <option value="claude">Claude (Anthropic)</option>
-          <option value="deepseek">DeepSeek</option>
         </select>
       </div>
 
@@ -90,7 +90,7 @@ export default function UploadSection({ groups, onUploadSuccess, selectedGroup }
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.txt"
           onChange={handleFileInputChange}
           style={{ display: 'none' }}
         />
@@ -98,9 +98,9 @@ export default function UploadSection({ groups, onUploadSuccess, selectedGroup }
           <p>Uploading and processing...</p>
         ) : (
           <>
-            <p>Drop screenshot here or click to browse</p>
+            <p>Drop file here or click to browse</p>
             <p style={{ fontSize: '12px', color: '#999', marginTop: '10px' }}>
-              Supports: JPG, PNG, GIF, WebP
+              Images: JPG, PNG, GIF, WebP | WhatsApp Chats: TXT
             </p>
           </>
         )}

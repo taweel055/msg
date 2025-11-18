@@ -42,7 +42,7 @@ export default function ScreenshotGrid({ screenshots, groups, onDelete, onTaskCr
   };
 
   if (screenshots.length === 0) {
-    return <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>No screenshots yet</div>;
+    return <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>No items yet</div>;
   }
 
   return (
@@ -55,7 +55,17 @@ export default function ScreenshotGrid({ screenshots, groups, onDelete, onTaskCr
             <div key={screenshot.id} className="screenshot-card">
               <div className="screenshot-info">
                 <h3>
-                  {screenshot.ocr_provider.toUpperCase()} OCR
+                  <span style={{
+                    background: screenshot.content_type === 'chat' ? '#28a745' : '#667eea',
+                    color: 'white',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    fontSize: '11px',
+                    marginRight: '8px'
+                  }}>
+                    {screenshot.content_type === 'chat' ? '💬 CHAT' : '📷 SCREENSHOT'}
+                  </span>
+                  {screenshot.ocr_provider.toUpperCase()}
                   {group && (
                     <span style={{ marginLeft: '10px', fontSize: '12px', color: group.color || '#667eea' }}>
                       {group.name}

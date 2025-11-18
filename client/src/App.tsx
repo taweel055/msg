@@ -100,8 +100,8 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Screenshot OCR App</h1>
-        <p>Process screenshots with Claude or DeepSeek AI, organize into groups, and create tasks</p>
+        <h1>Screenshot OCR & Chat Analysis App</h1>
+        <p>Process screenshots and WhatsApp chats with AI, extract key information, organize into groups, and create tasks</p>
       </header>
 
       {error && <div className="error">{error}</div>}
@@ -127,7 +127,7 @@ function App() {
                 className={`tab ${activeTab === 'screenshots' ? 'active' : ''}`}
                 onClick={() => setActiveTab('screenshots')}
               >
-                Screenshots ({filteredScreenshots.length})
+                Content ({filteredScreenshots.length})
               </button>
               <button
                 className={`tab ${activeTab === 'tasks' ? 'active' : ''}`}

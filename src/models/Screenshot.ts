@@ -6,6 +6,7 @@ export interface Screenshot {
   filename: string;
   filepath: string;
   group_id?: string;
+  content_type: 'screenshot' | 'chat';
   ocr_provider: string;
   extracted_text?: string;
   summary?: string;
@@ -17,6 +18,7 @@ export class ScreenshotModel {
     filename: string;
     filepath: string;
     group_id?: string;
+    content_type?: 'screenshot' | 'chat';
     ocr_provider: string;
     extracted_text?: string;
     summary?: string;
@@ -24,13 +26,14 @@ export class ScreenshotModel {
     const id = uuidv4();
 
     await dbAsync.run(
-      `INSERT INTO screenshots (id, filename, filepath, group_id, ocr_provider, extracted_text, summary)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO screenshots (id, filename, filepath, group_id, content_type, ocr_provider, extracted_text, summary)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         id,
         data.filename,
         data.filepath,
         data.group_id || null,
+        data.content_type || 'screenshot',
         data.ocr_provider,
         data.extracted_text || null,
         data.summary || null,

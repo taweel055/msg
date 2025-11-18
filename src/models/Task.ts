@@ -45,17 +45,17 @@ export class TaskModel {
   }
 
   static async findById(id: string): Promise<Task | null> {
-    const result = await dbAsync.get('SELECT * FROM tasks WHERE id = ?', [id]);
+    const result = await dbAsync.get<Task>('SELECT * FROM tasks WHERE id = ?', [id]);
     return result || null;
   }
 
   static async findAll(): Promise<Task[]> {
-    const results = await dbAsync.all('SELECT * FROM tasks ORDER BY created_at DESC');
+    const results = await dbAsync.all<Task>('SELECT * FROM tasks ORDER BY created_at DESC');
     return results;
   }
 
   static async findByScreenshotId(screenshotId: string): Promise<Task[]> {
-    const results = await dbAsync.all(
+    const results = await dbAsync.all<Task>(
       'SELECT * FROM tasks WHERE screenshot_id = ? ORDER BY created_at DESC',
       [screenshotId]
     );
@@ -63,7 +63,7 @@ export class TaskModel {
   }
 
   static async findByGroupId(groupId: string): Promise<Task[]> {
-    const results = await dbAsync.all(
+    const results = await dbAsync.all<Task>(
       'SELECT * FROM tasks WHERE group_id = ? ORDER BY created_at DESC',
       [groupId]
     );

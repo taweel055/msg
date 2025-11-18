@@ -1,22 +1,39 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
 
 const dbPath = process.env.DATABASE_PATH || './database.sqlite';
 
 export const db = new sqlite3.Database(dbPath);
 
-const run = promisify(db.run.bind(db));
-const get = promisify(db.get.bind(db));
-const all = promisify(db.all.bind(db));
-
+// Promisified database methods
 export const dbAsync = {
-  run,
-  get,
-  all,
+  run: (sql: string, params: any[] = []): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  },
+  get: <T = any>(sql: string, params: any[] = []): Promise<T | undefined> => {
+    return new Promise<T | undefined>((resolve, reject) => {
+      db.get(sql, params, (err, row) => {
+        if (err) reject(err);
+        else resolve(row as T | undefined);
+      });
+    });
+  },
+  all: <T = any>(sql: string, params: any[] = []): Promise<T[]> => {
+    return new Promise<T[]>((resolve, reject) => {
+      db.all(sql, params, (err, rows) => {
+        if (err) reject(err);
+        else resolve((rows || []) as T[]);
+      });
+    });
+  },
 };
 
 export async function initializeDatabase() {
-  await run(`
+  await dbAsync.run(`
     CREATE TABLE IF NOT EXISTS groups (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -26,7 +43,7 @@ export async function initializeDatabase() {
     )
   `);
 
-  await run(`
+  await dbAsync.run(`
     CREATE TABLE IF NOT EXISTS screenshots (
       id TEXT PRIMARY KEY,
       filename TEXT NOT NULL,
@@ -40,7 +57,7 @@ export async function initializeDatabase() {
     )
   `);
 
-  await run(`
+  await dbAsync.run(`
     CREATE TABLE IF NOT EXISTS tasks (
       id TEXT PRIMARY KEY,
       title TEXT NOT NULL,

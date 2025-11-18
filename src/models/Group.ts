@@ -27,12 +27,12 @@ export class GroupModel {
   }
 
   static async findById(id: string): Promise<Group | null> {
-    const result = await dbAsync.get('SELECT * FROM groups WHERE id = ?', [id]);
+    const result = await dbAsync.get<Group>('SELECT * FROM groups WHERE id = ?', [id]);
     return result || null;
   }
 
   static async findAll(): Promise<Group[]> {
-    const results = await dbAsync.all('SELECT * FROM groups ORDER BY created_at DESC');
+    const results = await dbAsync.all<Group>('SELECT * FROM groups ORDER BY created_at DESC');
     return results;
   }
 

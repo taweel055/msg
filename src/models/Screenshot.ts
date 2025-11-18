@@ -41,17 +41,17 @@ export class ScreenshotModel {
   }
 
   static async findById(id: string): Promise<Screenshot | null> {
-    const result = await dbAsync.get('SELECT * FROM screenshots WHERE id = ?', [id]);
+    const result = await dbAsync.get<Screenshot>('SELECT * FROM screenshots WHERE id = ?', [id]);
     return result || null;
   }
 
   static async findAll(): Promise<Screenshot[]> {
-    const results = await dbAsync.all('SELECT * FROM screenshots ORDER BY created_at DESC');
+    const results = await dbAsync.all<Screenshot>('SELECT * FROM screenshots ORDER BY created_at DESC');
     return results;
   }
 
   static async findByGroupId(groupId: string): Promise<Screenshot[]> {
-    const results = await dbAsync.all(
+    const results = await dbAsync.all<Screenshot>(
       'SELECT * FROM screenshots WHERE group_id = ? ORDER BY created_at DESC',
       [groupId]
     );

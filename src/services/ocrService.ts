@@ -33,7 +33,7 @@ export async function processWithClaude(imagePath: string): Promise<OCRResult> {
     }
 
     const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 4096,
       messages: [
         {
@@ -201,7 +201,7 @@ export async function processChatWithClaude(chatPath: string): Promise<OCRResult
     const chatText = fs.readFileSync(chatPath, 'utf-8');
 
     const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 4096,
       messages: [
         {

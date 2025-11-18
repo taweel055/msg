@@ -1,15 +1,15 @@
 # Screenshot OCR & Chat Analysis App
 
-A powerful application with Claude and DeepSeek AI support for processing screenshots and WhatsApp chats with automatic summarization, grouping, and task management.
+A powerful application powered by Claude Haiku 3.5 for processing screenshots and WhatsApp chats with automatic summarization, grouping, and task management.
 
 ## Features
 
-- **Screenshot OCR**: Extract text from images using Claude or DeepSeek
+- **Screenshot OCR**: Extract text from images using Claude Haiku 3.5 vision model
 - **WhatsApp Chat Analysis**: Analyze exported WhatsApp chats (.txt files)
-- **AI Summarization**: Automatically summarize content with key insights
+- **AI Summarization**: Automatically summarize content with key insights powered by Claude
 - **Smart Grouping**: Organize content into custom groups/niches
 - **Task Management**: Create and manage tasks from screenshots or chats
-- **Dual AI Support**: Choose between Claude and DeepSeek for processing
+- **Dual AI Support**: Claude Haiku 3.5 (recommended) and DeepSeek (chat analysis only)
 - **File Path Processing**: Process files directly from filesystem paths
 
 ## Setup
@@ -23,7 +23,9 @@ cd client && npm install
 2. Configure environment:
 ```bash
 cp .env.example .env
-# Edit .env with your API keys
+# Edit .env with your Anthropic API key
+# ANTHROPIC_API_KEY is required for Claude Haiku 3.5
+# Get your key from: https://console.anthropic.com/
 ```
 
 3. Run the application:
@@ -66,7 +68,7 @@ curl -X POST http://localhost:3000/api/screenshots/process-path \
   -H "Content-Type: application/json" \
   -d '{
     "file_path": "/path/to/your/file.png",
-    "provider": "deepseek",
+    "provider": "claude",
     "group_id": "optional-group-id"
   }'
 ```
@@ -76,30 +78,34 @@ curl -X POST http://localhost:3000/api/screenshots/process-path \
 **Bash:**
 ```bash
 ./examples/process-file-path.sh /path/to/screenshot.png
-./examples/process-file-path.sh /path/to/chat.txt deepseek
+./examples/process-file-path.sh /path/to/chat.txt claude
 ./examples/process-file-path.sh /path/to/file.png claude group-id-123
 ```
 
 **Node.js:**
 ```bash
 node examples/process-file-path.js /path/to/screenshot.png
-node examples/process-file-path.js /path/to/chat.txt deepseek
+node examples/process-file-path.js /path/to/chat.txt claude
 ```
 
 **Python:**
 ```bash
 python examples/process-file-path.py /path/to/screenshot.png
-python examples/process-file-path.py /path/to/chat.txt deepseek
+python examples/process-file-path.py /path/to/chat.txt claude
 ```
 
 ### Request Body:
 ```json
 {
   "file_path": "/absolute/path/to/file.png",
-  "provider": "deepseek",
+  "provider": "claude",
   "group_id": "optional-group-id"
 }
 ```
+
+**Note:** Provider options are:
+- `claude` - Claude Haiku 3.5 (recommended for both screenshots and chats)
+- `deepseek` - DeepSeek (chat analysis only, does not support screenshot OCR)
 
 ### Response:
 ```json
@@ -108,12 +114,17 @@ python examples/process-file-path.py /path/to/chat.txt deepseek
   "filename": "file.png",
   "filepath": "/absolute/path/to/file.png",
   "content_type": "screenshot",
-  "ocr_provider": "deepseek",
+  "ocr_provider": "claude",
   "extracted_text": "Extracted text here...",
   "summary": "AI-generated summary...",
   "created_at": "2025-11-18T12:00:00.000Z"
 }
 ```
+
+## AI Models Used
+
+- **Claude Haiku 3.5** (`claude-3-5-haiku-20241022`): Fast, cost-effective model for screenshot OCR and chat analysis
+- **DeepSeek**: Alternative for text-based chat analysis (screenshot OCR not supported by DeepSeek API)
 
 ## Tech Stack
 

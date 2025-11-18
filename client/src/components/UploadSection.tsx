@@ -10,7 +10,7 @@ interface Props {
 
 export default function UploadSection({ groups, onUploadSuccess, selectedGroup }: Props) {
   const [uploading, setUploading] = useState(false);
-  const [provider, setProvider] = useState<'claude' | 'deepseek'>('deepseek');
+  const [provider, setProvider] = useState<'claude' | 'deepseek'>('claude');
   const [groupId, setGroupId] = useState<string>(selectedGroup || '');
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -63,8 +63,8 @@ export default function UploadSection({ groups, onUploadSuccess, selectedGroup }
       <div className="form-group">
         <label>AI Provider</label>
         <select value={provider} onChange={(e) => setProvider(e.target.value as 'claude' | 'deepseek')}>
-          <option value="deepseek">DeepSeek (Recommended)</option>
-          <option value="claude">Claude (Anthropic)</option>
+          <option value="claude">Claude Haiku 3.5 (Recommended)</option>
+          <option value="deepseek">DeepSeek (Chat Analysis Only)</option>
         </select>
       </div>
 
